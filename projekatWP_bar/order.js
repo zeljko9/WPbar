@@ -2,16 +2,19 @@ import{Glass} from "./glass.js";
 
 export class Order{
     constructor(){
-        this.Price=0;
+        this.finall_price=0;
         this.Num_glass=0;
+        this.order_time="";
         this.Glasses=[];        
     }
 
     setPrice(a){
-        this.Price+=a;
+        this.finall_price+=a;
     }
 
     createGlasses(a){
+        let d=new Date();
+        this.order_time=d.toUTCString();
         this.Num_glass=a;
 
         for(let i=0;i<this.Num_glass;i++){
@@ -38,5 +41,9 @@ export class Order{
 
     glasses(){
         return this.Glasses;
+    }
+
+    get price(){
+        return this.finall_price;
     }
 }

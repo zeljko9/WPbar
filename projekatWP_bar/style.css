@@ -1,6 +1,23 @@
+.maincontainer{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.configurator{
+    display: flex;
+    flex-direction: column;
+    border: 2px dotted black;
+    align-items: center;
+    margin-bottom: 5px;   
+    padding-bottom: 5px;
+    background-size: 100% auto;
+}
+
 .container{
     display: flex;
     border:  1px solid black;
+    margin-bottom: 5px;
 }
 
 .contForm{
@@ -12,10 +29,14 @@
 }
 
 .contForm1{
+    display: flex;
+    flex-direction: column;
     margin: 2px;
 }
 
 .contForm2{
+    display: flex;
+    flex-direction: column;
     margin:2px;
 }
 
@@ -26,4 +47,8 @@ table{
 
 td{
     width:20%;
+}
+
+.btn{
+    width:100%;
 }

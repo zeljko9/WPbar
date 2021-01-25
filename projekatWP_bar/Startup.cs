@@ -33,16 +33,13 @@ namespace projekatWP_bar
                 {
                     builder.AllowAnyHeader()
                            .AllowAnyMethod()
-                           .WithOrigins(new string[]
-                           {
-                               "http://127.0.0.1:5500"
-                           });
+                           .AllowAnyOrigin();
                 });
             });
             services.AddControllers();
             services.AddDbContext<BarContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("BarCS"));
+                options.UseSqlServer(Configuration.GetConnectionString("CSbar"));
             });
         }
 
@@ -53,6 +50,19 @@ namespace projekatWP_bar
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/Home";
+                    await next();
+                }
+            });
 
             app.UseHttpsRedirection();
 

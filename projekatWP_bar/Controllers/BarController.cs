@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using projekatWP_bar.Model;
 
 namespace projekatWP_bar.Controller{
+    
+    [Route("Bar")]
     [ApiController]
-    [Route("[controller]")]
 
     public class BarController: ControllerBase{
 
@@ -18,7 +19,37 @@ namespace projekatWP_bar.Controller{
              Context=context;
         }
 
-        [Route("GetOrders")]
+        [Route("PostBar")]
+        [HttpPost]
+        public async Task PostBar([FromBody] Bar bar){
+            try{
+                Context.Bars.Add(bar);
+                await Context.SaveChangesAsync();
+            }
+            catch(Exception e){
+                Console.WriteLine(e);
+            }
+        } 
+
+        [Route("UpdateOrder/{waitername}")]
+        [HttpPost]
+        public async Task UpdateOrder([FromRoute]string waitername,[FromBody] Order order){
+            try{
+                Console.WriteLine(waitername);
+                var waiter = Context.Waiters.Where(p=>p.name==waitername).ToList().Last();
+                order.Waiter=waiter;
+
+                waiter.num_order=waiter.num_order+1;
+            
+                Context.Orders.Add(order);
+                await Context.SaveChangesAsync();
+            }
+            catch(Exception e){
+                Console.WriteLine(e);
+            }
+        }
+
+       /* [Route("GetOrders")]
         [HttpGet]
         public async Task<List<Order>> GetBars(){
             return await Context.Orders.Include(p=>p.Glasses).ToListAsync();
@@ -56,6 +87,6 @@ namespace projekatWP_bar.Controller{
 
             Context.Update<Order>(order);
             await Context.SaveChangesAsync();
-        }
+        }*/
     }
 }

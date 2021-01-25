@@ -1,4 +1,4 @@
-import {Bar} from "./Bar.js"
+import {Bar} from "./bar.js"
 
-const bar=new Bar();
-bar.drawBar(document.body);
+const b=new Bar();
+b.drawForm(document.body);

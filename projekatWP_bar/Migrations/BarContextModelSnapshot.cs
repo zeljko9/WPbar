@@ -19,6 +19,27 @@ namespace projekatWP_bar.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
+            modelBuilder.Entity("projekatWP_bar.Model.Bar", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("waiters_names");
+
+                    b.Property<int>("num")
+                        .HasColumnType("int")
+                        .HasColumnName("num");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Bar");
+                });
+
             modelBuilder.Entity("projekatWP_bar.Model.Glass", b =>
                 {
                     b.Property<int>("ID")
@@ -31,10 +52,10 @@ namespace projekatWP_bar.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Color");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("DrinkName")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Name");
+                        .HasColumnName("DrinkName");
 
                     b.Property<int?>("OrderID")
                         .HasColumnType("int");
@@ -66,13 +87,52 @@ namespace projekatWP_bar.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Num_glass");
 
-                    b.Property<int>("Price")
+                    b.Property<int?>("WaiterID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("finall_price")
                         .HasColumnType("int")
-                        .HasColumnName("Price");
+                        .HasColumnName("finall_price");
+
+                    b.Property<string>("order_time")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("order_time");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("WaiterID");
+
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("projekatWP_bar.Model.Waiter", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("BarID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("arrive_time")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("arrive_time");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("num_order")
+                        .HasColumnType("int")
+                        .HasColumnName("num_order");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BarID");
+
+                    b.ToTable("Waiter");
                 });
 
             modelBuilder.Entity("projekatWP_bar.Model.Glass", b =>
@@ -86,7 +146,35 @@ namespace projekatWP_bar.Migrations
 
             modelBuilder.Entity("projekatWP_bar.Model.Order", b =>
                 {
+                    b.HasOne("projekatWP_bar.Model.Waiter", "Waiter")
+                        .WithMany("Orders")
+                        .HasForeignKey("WaiterID");
+
+                    b.Navigation("Waiter");
+                });
+
+            modelBuilder.Entity("projekatWP_bar.Model.Waiter", b =>
+                {
+                    b.HasOne("projekatWP_bar.Model.Bar", "Bar")
+                        .WithMany("Waiters")
+                        .HasForeignKey("BarID");
+
+                    b.Navigation("Bar");
+                });
+
+            modelBuilder.Entity("projekatWP_bar.Model.Bar", b =>
+                {
+                    b.Navigation("Waiters");
+                });
+
+            modelBuilder.Entity("projekatWP_bar.Model.Order", b =>
+                {
                     b.Navigation("Glasses");
+                });
+
+            modelBuilder.Entity("projekatWP_bar.Model.Waiter", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

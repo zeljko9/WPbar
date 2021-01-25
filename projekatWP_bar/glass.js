@@ -1,18 +1,18 @@
 export class Glass{
     constructor(a,b,c,d){
         this.Position=a;
-        this.Name=b;
+        this.DrinkName=b;
         this.Price=c;
-        this.Polor=d;
+        this.Color=d;
     }
 
     updateGlass(a,b,c){
-        this.Name+=", "+a;
+        this.DrinkName+=", "+a;
         this.Price+=b;
         this.Color=c;
     }
     newGl(a,b,c){
-        this.Name=a;
+        this.DrinkName=a;
         this.Price=b;
         this.Color=c;
     }
@@ -20,7 +20,7 @@ export class Glass{
         return this.Color;
     }
     get name(){
-        return this.Name;
+        return this.DrinkName;
     }
     get price(){
         return this.Price;

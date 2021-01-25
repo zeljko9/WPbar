@@ -10,9 +10,9 @@ namespace projekatWP_bar.Model{
         public int ID { get; set; }
         [Column("Position")]
         public int Position { get; set; }
-        [Column("Name")]
+        [Column("DrinkName")]
         [MaxLength(255)]
-        public string Name { get; set; }
+        public string DrinkName { get; set; }
         [Column("Price")]
         public int Price { get; set; }
         [Column("Color")]
